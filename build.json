@@ -1,0 +1,22 @@
+{
+  "android": {
+    "release": {
+      "keystore": "InfiniTimeMobile.keystore",
+      "storePassword": "TC54AZ",
+      "alias": "FSchmitthammer",
+      "password": "TC54AZ",
+      "keystoreType": ""
+    }
+  },
+  "ios": {
+    "debug": {
+      "developmentTeam": "6NUCF5ZDJZ",
+      "buildFlag": [ "-UseModernBuildSystem=0" ]
+    },
+    "release": {
+      "developmentTeam": "6NUCF5ZDJZ",
+      "buildFlag": [ "-UseModernBuildSystem=0" ]
+    }
+  }
+
+}

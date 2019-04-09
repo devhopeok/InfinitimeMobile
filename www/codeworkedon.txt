@@ -1,0 +1,149 @@
+function processZGP(tx) {
+    var sqlStatement, sqlStatement1
+    var currentResponse = zgpServiceResponse
+    sqlStatement1 = "UPDATE TCzgp SET bRetainRecord = 0"
+    try {
+        tx.executeSql(sqlStatement1, null, function successUpdate(tx) {
+            $('#zgp_lCount').val($(currentResponse).find("TCzgp").length)
+            if ($('#zgp_lCount').val() == 0) {
+                deleteRecords("TCzgp", tx)
+            }
+            else {
+                processLargeDataZGP(currentResponse, tx)
+            }
+        },
+            function errorUpdate(tx, err) {
+                displaySQLError(sqlStatement1, err)
+            }
+                )
+    }
+    catch (e) {
+
+    }
+}
+
+function processLargeDataZGP(currentResponse, tx) {
+    var i = 0;
+    var TCzgpRecord
+    var bprocessDelete = false
+    var listitems = ""
+    var totalCount = $(currentResponse).find("TCzgp").length
+    var myXML = $.parseXML(currentResponse)
+    var tableHTML
+    tableHTML = '<table data-role="table" class="ui-responsive ui-shadow ui-table " id="zgpTablel">'
+    tableHTML += '<thead><tr nowrap>'
+    tableHTML += '<th nowrap class="myth" data-colstart="1">Select</th>'
+    tableHTML += '<th nowrap class="myth" data-colstart="2">Name</th>'
+    tableHTML += '</tr></thead><tbody>'
+    $(myXML).find("TCzgp").each(function () {
+        TCzgpRecord = $(this)
+        tableHTML += '<tr nowrap class="mytr" id="' + TCzgpRecord.text() + '">'
+        tableHTML += '<td nowrap class="mytd"><input type="checkbox" /></td>'
+        tableHTML += '<td nowrap class="mytd"><b class="ui-table-cell-label"></b>' + $(TCzgpRecord).attr('szEmployeeName') + '</td>'
+        tableHTML += '</tr>'
+        if (i == totalCount - 1) {
+            bprocessDelete = true
+        }
+        callAddOrUpdateZGP(tx, TCzgpRecord, TCzgpRecord.text(), bprocessDelete)
+        ++i
+    })
+    tableHTML += '</tbody></table>'
+    setSelectControl(tableHTML, "#GrouPunchTable")
+    zgpServiceResponse = ""    
+}
+
+function callAddOrUpdateZGP(tx, TCzgpRecord, lCEM_SysId, bprocessDelete) {
+
+    var sqlStatement = 'SELECT * FROM TCzgp WHERE lCEM_SysId = ' + lCEM_SysId
+    try {
+        tx.executeSql(sqlStatement, null,
+            function successSelect(tx, result) {
+                if (result) {
+                    if (result.rows.length > 0) {
+                        sqlStatement = "UPDATE TCzgp SET bRetainRecord = 1 WHERE lCEM_SysId = " + lCEM_SysId                        
+                        try {
+                            tx.executeSql(sqlStatement, null, function SuccessUpdateZGP(tx) {
+                                if (bprocessDelete == true) {
+                                    deleteRecords("TCzgp", tx)
+                                }
+                            }, function errorUpdateZGP(tx, err) {
+                                displaySQLError(sqlStatement, err)
+                            })
+                        }
+                        catch (e) {
+
+                        }
+                    }
+                    else {
+                        sqlStatement = "Insert Into TCzgp(lCEM_SysId,szEmployeeName,szClockId,bRetainRecord) Values(" + lCEM_SysId + ",'"
+                        sqlStatement += $(TCzgpRecord).attr('szEmployeeName') + "','" +  $(TCzgpRecord).attr('szClockId') + "',1)"
+                        try {
+                            tx.executeSql(sqlStatement, null, function SuccessInsertZGP(tx) {
+                                if (bprocessDelete == true) {
+                                    deleteRecords("TCzgp", tx)
+                                }
+                            }, function errorInsertZGP(tx, err) {
+                                displaySQLError(sqlStatement, err)
+                            })
+                        }
+                        catch (e) {
+
+                        }
+                    }
+                }
+            },
+            function errorSelect(tx, err) {
+                displaySQLError(sqlStatement, err)
+            }
+            )
+    }
+    catch (e) {
+
+    }
+}
+
+function loadZGPFromDB() {
+    var tableHTML = ''
+    if (!db) {
+        db = window.openDatabase("TCDBS", "", "Atlas Mobile", 200000);
+    }
+    try {
+        db.transaction(function (tx) {
+            tx.executeSql('SELECT * FROM TCzgp ORDER BY szEmployeeName', null,
+                function successloadZGPFromDB(tx, result) {
+                    var rows, row, i = 0
+    tableHTML = '<table data-role="table" class="ui-responsive ui-shadow ui-table " id="zgpTablel">'
+    tableHTML += '<thead><tr nowrap>'
+    tableHTML += '<th nowrap class="myth" data-colstart="1">Select</th>'
+    tableHTML += '<th nowrap class="myth" data-colstart="2">Name</th>'
+    tableHTML += '</tr></thead><tbody>'
+                    
+                    if (result.rows.length > 0) {
+                        rows = resultsToArray(result.rows);
+                        $.each(rows, function () {
+                            if (device.platform == 'android' || device.platform == 'Android') {
+                                row = rows.item(i);
+                            }
+                            else {
+                                row = rows[i]
+                            }
+        tableHTML += '<tr nowrap class="mytr" id="' + row.lCEM_SysId + '">'
+        tableHTML += '<td nowrap class="mytd"><input type="checkbox" /></td>'
+        tableHTML += '<td nowrap class="mytd"><b class="ui-table-cell-label"></b>' +  row.szEmployeeName + '</td>'
+        tableHTML += '</tr>'
+                            i++;
+                        })
+                    }
+                    tableHTML += '</tbody></table>'
+                    setSelectControl(tableHTML, "#GrouPunchTable")
+                },
+                function errorloadZGPFromDB(tx, err) {
+                    displaySQLError(sqlStatement, err)
+                }
+                )
+        })
+    }
+    catch (e) {
+
+    }
+}

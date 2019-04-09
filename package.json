@@ -1,0 +1,70 @@
+{
+    "name": "InfinitimeMobile",
+    "version": "1.105.0",
+    "private": true,
+    "dependencies": {
+        "cordova-android": "^7.1.0",
+        "cordova-background-geolocation-lt": "^2.14.2",
+        "cordova-ios": "^4.5.4",
+        "cordova-plugin-app-version": "^0.1.9",
+        "cordova-plugin-background-fetch": "~5.4.1",
+        "cordova-plugin-background-mode": "^0.7.2",
+        "cordova-plugin-cocoalumberjack": "~0.0.4",
+        "cordova-plugin-device": "git+https://github.com/apache/cordova-plugin-device.git",
+        "cordova-plugin-dialogs": "^2.0.1",
+        "cordova-plugin-file": "^6.0.1",
+        "cordova-plugin-geolocation": "^4.0.1",
+        "cordova-plugin-globalization": "^1.11.0",
+        "cordova-plugin-media": "^5.0.2",
+        "cordova-plugin-network-information": "git+https://github.com/apache/cordova-plugin-network-information.git",
+        "cordova-plugin-whitelist": "^1.2.2",
+        "cordova-plugin-x-toast": "^2.6.2",
+        "cordova-support-google-services": "^1.1.0",
+        "phonegap-plugin-mobile-accessibility": "^1.0.5",
+        "phonegap-plugin-multidex": "~1.0.0",
+        "phonegap-plugin-push": "^2.2.3"
+    },
+    "cordova": {
+        "plugins": {
+            "cordova-plugin-whitelist": {},
+            "phonegap-plugin-mobile-accessibility": {},
+            "cordova-plugin-app-version": {},
+            "cordova-plugin-background-mode": {},
+            "cordova-plugin-device": {},
+            "cordova-plugin-dialogs": {},
+            "cordova-plugin-file": {},
+            "cordova-plugin-geolocation": {
+                "GEOLOCATION_USAGE_DESCRIPTION": "Location tracking only used when a punch occurs."
+            },
+            "cordova-plugin-globalization": {},
+            "cordova-plugin-media": {
+                "KEEP_AVAUDIOSESSION_ALWAYS_ACTIVE": "NO",
+                "MICROPHONE_USAGE_DESCRIPTION": "Microphone is not used or activated."
+            },
+            "cordova-plugin-x-toast": {},
+            "phonegap-plugin-push": {
+                "FCM_VERSION": "11.8.0",
+                "ANDROID_SUPPORT_V13_VERSION": "27.+"
+            },
+            "cordova-background-geolocation-lt": {
+                "GOOGLE_API_VERSION": "11.8.0",
+                "LICENSE": "d5d2b8e8d0b933d19d28ee3f15645bf3abdf214bb63d4d10eac5b98529768ca3",
+                "APPCOMPAT_VERSION": "27.1.1",
+                "BACKGROUND_MODE_LOCATION": "&amp;amp;lt;string&amp;amp;gt;Background location tracking is used for geofence auto punching.&amp;amp;lt;/string&amp;amp;gt;",
+                "LOCATION_ALWAYS_AND_WHEN_IN_USE_USAGE_DESCRIPTION": "Location tracking only used when a punch occurs.",
+                "LOCATION_ALWAYS_USAGE_DESCRIPTION": "Location tracking only used when a punch occurs.",
+                "LOCATION_WHEN_IN_USE_USAGE_DESCRIPTION": "Location tracking only used when a punch occurs.",
+                "MOTION_USAGE_DESCRIPTION": "Location tracking only used when a punch occurs."
+            },
+            "cordova-plugin-background-fetch": {},
+            "cordova-plugin-cocoalumberjack": {},
+            "cordova-plugin-network-information": {},
+            "cordova-support-google-services": {},
+            "phonegap-plugin-multidex": {}
+        },
+        "platforms": [
+            "android",
+            "ios"
+        ]
+    }
+}

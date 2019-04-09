@@ -1,0 +1,41 @@
+{
+  "project_info": {
+    "project_number": "1028160158877",
+    "firebase_url": "https://infinitime-atlas-mobile.firebaseio.com",
+    "project_id": "infinitime-atlas-mobile"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1028160158877:android:dc5f014616215017",
+        "android_client_info": {
+          "package_name": "com.LoneWolfSoftware.InfinitimeAtlasMobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1028160158877-cc320ka100rrfl1jc0r01b0bk172qk0t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCqE8p8HUrobodaiSceTObNJxLZh2Cu0I0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

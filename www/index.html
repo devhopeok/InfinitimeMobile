@@ -1,0 +1,1494 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    <!--
+        Customize the content security policy in the meta tag below as needed. Add 'unsafe-inline' to default-src to enable inline JavaScript.
+        For details, see http://go.microsoft.com/fwlink/?LinkID=617521
+    -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; connect-src 'self' *">
+    <meta name="viewport" content="user-scalable=yes, initial-scale=1, minimum-scale=1, maximum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi">
+    <title>Infinitime Mobile</title>
+    <!-- InfinitimeMobile references -->
+    <link href="css/index.css" rel="stylesheet" />
+    <link rel="stylesheet" href="themes/tcmobiletheme.min.css" />
+    <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.min.css">
+
+    <!--
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+    -->
+    <link href="css/tcmobile.css" rel="stylesheet" />
+
+
+</head>
+<body>
+    <!-- JQuery reference, this is needed to support JQuery as well as the Mobile Version of JQuery. -->
+    <script src="scripts/jquery-2.1.4.min.js"></script>
+    <script src="scripts/jquery.mobile-1.4.5.min.js"></script>
+
+    <!-- Cordova reference, this is added to your app when it's built. -->
+    <script src="cordova.js"></script>
+    <script src="scripts/platformOverrides.js"></script>
+
+    <!-- Page Related Code -->
+    <script src="scripts/tcmobile.js"></script>
+    <script src="scripts/index.js"></script>
+    <script src="scripts/tcdatabasing.js"></script>
+    <script src="scripts/tcschedule.js"></script>
+    <script src="scripts/tcaccrual.js"></script>
+    <script src="scripts/tctimecard.js"></script>
+    <script src="scripts/tcsupport.js"></script>
+    <script src="scripts/tcmessages.js"></script>
+    <script src="scripts/tcpunches.js"></script>
+    <script src="scripts/tctransactions.js"></script>
+    <script src="scripts/tcpush.js"></script>
+    <script src="scripts/tcavailability.js"></script>
+
+    <div data-role="page" id="Home">
+        <div id="HomeIOS"><br /><br /></div>
+        <div data-role="header">
+            <h1>Atlas Mobile</h1>
+            <a href="#Setup" data-icon="gear" class="ui-btn-right">Setup</a>
+            <a href="#HomeMenu" data-icon="bars" class="ui-btn-left">Menu</a>
+        </div>
+        <div data-role="panel" id="HomeMenu" data-position="left" data-display="push" style="background-color:#e5d5c3">
+            <ul style="list-style: none; text-align: left">
+                <li><a id="HomeMenu_Overview" href="#Overview" data-transition="slide" class="ui-link ui-btn ui-icon-info ui-btn-icon-left">Overview</a></li>
+                <li><a id="HomeMenu_TimecardNote" href="#TimecardNote" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Timecard Note</a></li>
+                <li><a id="HomeMenu_Accrual" href="#Accrual" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Accruals</a></li>
+                <li><a id="HomeMenu_Availability" href="#Availability" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Availability</a></li>
+                <li><a id="HomeMenu_Messages" href="#Messages" data-transition="slide" class="ui-link ui-btn ui-icon-calendar ui-btn-icon-left">View Messages</a></li>
+                <li><a id="HomeMenu_Transactions" href="#Transactions" data-transition="slide" class="ui-link ui-btn ui-icon-grid ui-btn-icon-left">Transactions</a></li>
+                <li><a id="HomeMenu_Note" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">New Message</a></li>
+                <li><a id="HomeMenu_NewSCH" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Request</a></li>
+                <li><a id="HomeMenu_NewSWAP" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Swap Request</a></li>
+                <li><a id="HomeMenu_NewOTA" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Request Time Off</a></li>
+                <li><a id="HomeMenu_Logout" href="#Login" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Logout</a></li>
+                <li><a id="HomeMenu_About" href="#About" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">About</a></li>
+                <li><a id="HomeMenu_Exit" href="#Exit" data-transition="slide" class="ui-link ui-btn ui-icon-action ui-btn-icon-left">Exit</a></li>
+            </ul>
+        </div>
+        <div role="main" class="ui-content">
+            <ul data-role="listview">
+                <li data-icon="false">
+                    <a id="Home_Punch" style="display:none">
+                        <img alt="a" src="images/HomePunchMobile.gif" />
+                        <h2>Punch</h2>
+                        <p>Touch Here To Punch</p>
+                    </a>
+                </li>
+                <li data-icon="false">
+                    <a id="Home_GroupPunch" style="display:none">
+                        <img alt="a" src="images/HomePunchMobile.gif" />
+                        <h2>Group Punch</h2>
+                        <p>Touch Here To Group Punch</p>
+                    </a>
+                </li>
+                <li data-icon="false">
+                    <a id="Home_Transfer" style="display:none">
+                        <img alt="a" src="images/HomeTransferMobile.gif" />
+                        <h2>Transfer</h2>
+                        <p>Touch Here To Change Dept/Job/Task</p>
+                    </a>
+                </li>
+                <li data-icon="false">
+                    <a href="#OTA" id="Home_OTA" style="display:none">
+                        <img alt="a" src="images/HomeOtherActivityMobile.gif" />
+                        <h2>Enter Other Activity</h2>
+                        <p>Touch Here To Enter Other Activity</p>
+                    </a>
+                </li>
+                <li data-icon="false">
+                    <a href="#Timecard" id="Home_Timecard" style="display:none">
+                        <img alt="a" src="images/HomeTimecardMobile.gif" />
+                        <h2>View Timecard</h2>
+                        <p>Touch Here To View Your Timecard</p>
+                    </a>
+                </li>
+                <li data-icon="false">
+                    <a href="#Schedule" id="Home_Schedule" style="display:none">
+                        <img alt="a" src="images/HomeScheduleMobile.gif" />
+                        <h2>View Schedule</h2>
+                        <p>Touch Here To View Your Schedule</p>
+                    </a>
+                </li>
+                <li data-icon="false">
+                    <a href="#ScheduleCover" id="Home_ScheduleCover" style="display:none">
+                        <img alt="a" src="images/HomeScheduleMobile.gif" />
+                        <h2>View Cover Requests</h2>
+                        <p>Touch Here To View Your Schedule Cover Requests</p>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div data-role="page" id="Overview">
+        <div id="OverviewIOS"><br /><br /></div>
+        <div data-role="header">
+            <h1>Atlas Mobile</h1>
+            <h1>Overview</h1>
+            <a href="#Home" data-icon="home" class="ui-btn-right" data-transition="slide">Home</a>
+            <a href="#OverviewMenu" data-icon="bars" class="ui-btn-left">Menu</a>
+        </div>
+        <div data-role="panel" id="OverviewMenu" data-position="left" data-display="push" style="background-color:#e5d5c3">
+            <ul style="list-style: none; text-align: left">
+                <li><a id="OverviewMenu_Punch" href="#Punch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Punch</a></li>
+                <li><a id="OverviewMenu_GroupPunch" href="#GroupPunch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Group Punch</a></li>
+                <li><a id="OverviewMenu_Transfer" href="#Punch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Transfer</a></li>
+                <li><a id="OverviewMenu_OTA" href="#OTA" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Enter Other Activity</a></li>
+                <li><a id="OverviewMenu_Timecard" href="#Timecard" data-transition="slide" class="ui-link ui-btn ui-icon-bullets ui-btn-icon-left">View Timecard</a></li>
+                <li><a id="OverviewMenu_TimecardNote" href="#TimecardNote" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Timecard Note</a></li>
+                <li><a id="OverviewMenu_Schedule" href="#Schedule" data-transition="slide" class="ui-link ui-btn ui-icon-calendar ui-btn-icon-left">View Schedule</a></li>
+                <li><a id="OverviewMenu_ScheduleCover" href="#ScheduleCover" data-transition="slide" class="ui-link ui-btn ui-icon-calendar ui-btn-icon-left">View Cover Requests</a></li>
+                <li><a id="OverviewMenu_Accrual" href="#Accrual" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Accruals</a></li>
+                <li><a id="OverviewMenu_Availability" href="#Availability" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Availability</a></li>
+                <li><a id="OverviewMenu_Messages" href="#Messages" data-transition="slide" class="ui-link ui-btn ui-icon-mail ui-btn-icon-left">View Messages</a></li>
+                <li><a id="OverviewMenu_Transactions" href="#Transactions" data-transition="slide" class="ui-link ui-btn ui-icon-grid ui-btn-icon-left">Transactions</a></li>
+                <li><a id="OverviewMenu_Note" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">New Message</a></li>
+                <li><a id="OverviewMenu_NewSCH" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Request</a></li>
+                <li><a id="OverviewMenu_NewSWAP" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Swap Request</a></li>
+                <li><a id="OverviewMenu_NewOTA" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Request Time Off</a></li>
+                <li><a id="OverviewMenu_Setup" href="#Setup" data-transition="slide" class="ui-link ui-btn ui-icon-gear ui-btn-icon-left">Setup</a></li>
+                <li><a id="OverviewMenu_Logout" href="#Login" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Logout</a></li>
+                <li><a id="OverviewMenu_About" href="#About" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">About</a></li>
+                <li><a id="OverviewMenu_Exit" href="#Exit" data-transition="slide" class="ui-link ui-btn ui-icon-action ui-btn-icon-left">Exit</a></li>
+            </ul>
+        </div>
+        <div role="main" class="ui-content">
+            <table>
+                <tr>
+                    <td style="vertical-align: middle">
+                        <label for="szEmployeeName">Name:</label>
+                    </td>
+                    <td>
+                        <input type="text" name="szEmployeeName" id="szEmployeeName" value="" readonly style="background-color: silver;">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: middle">
+                        <label for="lLastPunchDate">Last Punch:</label>
+                    </td>
+                    <td>
+                        <input type="text" name="lLastPunchDate" id="lLastPunchDate" value="" readonly style="background-color: silver;">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: middle">
+                        <label for="lLastPunchTime"></label>
+                    </td>
+                    <td>
+                        <input type="text" name="lLastPunchTime" id="lLastPunchTime" value="" readonly style="background-color: silver;">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: middle">
+                        <label for="szLastPunchType"></label>
+                    </td>
+                    <td>
+                        <input type="text" name="szLastPunchType" id="szLastPunchType" value="" readonly style="background-color: silver;">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: middle">
+                        <label for="szLastPunchDepartment"></label>
+                    </td>
+                    <td>
+                        <input type="text" name="szLastPunchDepartment" id="szLastPunchDepartment" value="" readonly style="background-color: silver;">
+                    </td>
+                </tr>
+                <tr id="LastPunchJobTR">
+                    <td style="vertical-align: middle">
+                        <label for="szLastPunchJob"></label>
+                    </td>
+                    <td>
+                        <input type="text" name="szLastPunchJob" id="szLastPunchJob" value="" readonly style="background-color: silver;">
+                    </td>
+                </tr>
+                <tr id="LastPunchTaskTR">
+                    <td style="vertical-align: middle">
+                        <label for="szLastPunchTask"></label>
+                    </td>
+                    <td>
+                        <input type="text" name="szLastPunchTask" id="szLastPunchTask" value="" readonly style="background-color: silver;">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: middle">
+                        <label for="nHoursForDay">Hours For Day:</label>
+                    </td>
+                    <td>
+                        <input type="text" name="nHoursForDay" id="nHoursForDay" value="" readonly style="background-color: silver;">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: middle">
+                        <label for="nHoursForWeek">Hours For Week:</label>
+                    </td>
+                    <td>
+                        <input type="text" name="nHoursForWeek" id="nHoursForWeek" value="" readonly style="background-color: silver;">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: middle">
+                        <label for="nHoursForPayPeriod">Hours For Pay Period:</label>
+                    </td>
+                    <td>
+                        <input type="text" name="nHoursForPayPeriod" id="nHoursForPayPeriod" value="" readonly style="background-color: silver;">
+                    </td>
+                </tr>
+                <tr>
+                    <td style="vertical-align: middle">
+                        <label for="lUnreadMessageCount">Unread Messages:</label>
+                    </td>
+                    <td>
+                        <input type="text" name="lUnreadMessageCount" id="lUnreadMessageCount" value="" readonly style="background-color: silver;">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div data-role="page" id="Setup">
+        <form>
+            <div id="SetupIOS"><br /><br /></div>
+            <div data-role="header">
+                <h1>Atlas Mobile</h1>
+                <h1>Setup</h1>
+            </div>
+            <div role="main" class="ui-content">
+                <div data-role="tabs" id="SetupTab">
+                    <div data-role="navbar">
+                        <ul>
+                            <li><a href="#SetupUserInfo" id="SetupUserInfoTab">User Info</a></li>
+                            <li><a href="#SetupServerInfo" id="SetupServerInfoTab">Server Info</a></li>
+                        </ul>
+                    </div>
+                    <div id="SetupUserInfo">
+                        <table>
+                            <tr>
+                                <td style="vertical-align: middle">
+                                    <label for="szAuthorization">Authorization:</label>
+                                </td>
+                                <td>
+                                    <input type="text" name="szAuthorization" id="szAuthorization" value="" style="text-transform: uppercase">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">
+                                    <label for="szClockId">Clock Id:</label>
+                                </td>
+                                <td>
+                                    <input type="tel" name="szClockId" id="szClockId" value="">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">
+                                    <label for="szClockPassword">Clock Password:</label>
+                                </td>
+                                <td>
+                                    <input type="tel" name="szClockPassword" id="szClockPassword" value="" style="-webkit-text-security:disc">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id="SetupServerInfo">
+                        <table>
+                            <tr>
+                                <td style="vertical-align: middle">
+                                    <label for="szServerProtocol">Protocol:</label>
+                                </td>
+                                <td>
+                                    <select name="szServerProtocol" id="szServerProtocol" data-inline="true">
+                                        <option value="HTTP">HTTP</option>
+                                        <option value="HTTPS">HTTPS</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">
+                                    <label for="szServerDomain">Address or Domain:</label>
+                                </td>
+                                <td>
+                                    <input type="text" name="szServerDomain" id="szServerDomain" value="">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align: middle">
+                                    <label for="lServerPort">Port:</label>
+                                </td>
+                                <td>
+                                    <input type="number" name="lServerPort" id="lServerPort" step="1" value="">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="vertical-align:top">
+                                    <label for="lHeartBeatFrequency">Heart Beat Frequency:</label>
+                                </td>
+                                <td>
+                                    <input type="range" name="lHeartBeatFrequency" id="lHeartBeatFrequency" min="1" max="60">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div style="display: none;">
+                    <input type="text" id="lSDV_SysId" style="display: none">
+                    <input type="text" id="lCEM_SysId" style="display: none">
+                    <input type="text" id="lSLA_SysId" style="display: none">
+                    <input type="text" id="bHideTimecard" style="display: none">
+                    <input type="text" id="bHideSchedule" style="display: none">
+                    <input type="text" id="bHideAccrual" style="display: none">
+                    <input type="text" id="bHideTransfer" style="display: none">
+                    <input type="text" id="bHideOtherActivity" style="display: none">
+                    <input type="text" id="bDisablePunch" style="display: none">
+                    <input type="text" id="szPushDeviceId" style="display: none">
+                    <input type="text" id="szGeofenceBase" style="display: none">
+                    <input type="text" id="bGeoAutoPunch" style="display: none">
+                    <input type="text" id="bGeoDefaults" style="display: none">
+                    <input type="text" id="bDisableCECOTA" style="display: none">
+                    <input type="text" id="bDisableCECSCH" style="display: none">
+                    <input type="text" id="bDisableCECSWAP" style="display: none">
+                    <input type="text" id="bDisableCEC" style="display: none">
+                    <input type="text" id="bHideCECList" style="display: none">
+                    <input type="text" id="bDisableReview" style="display: none">
+                    <input type="text" id="bDisableNote" style="display: none">
+                    <input type="text" id="lCurrentPayPerFrmDate" style="display: none">
+                    <input type="text" id="lCurrentPayPerToDate" style="display: none">
+                    <input type="text" id="lPastPayPerFrmDate" style="display: none">
+                    <input type="text" id="lPastPayPerToDate" style="display: none">
+                    <input type="text" id="szTimecardDateRange" style="display: none">
+                    <input type="text" id="bForceTransfer" style="display: none">
+                    <input type="text" id="bMultiEmp" style="display: none">
+                    <input type="text" id="bDisableDepSwitch" style="display: none">
+                    <input type="text" id="bDisableJobSwitch" style="display: none">
+                    <input type="text" id="bDisableTaskSwitch" style="display: none">
+                    <input type="text" id="bOTANoDepSwtch" style="display: none">
+                    <input type="text" id="bOTANoJobSwtch" style="display: none">
+                    <input type="text" id="bOTANoTaskSwtch" style="display: none">
+                    <input type="text" id="bNoGeoPunch" style="display: none">
+                    <input type="text" id="bAllowGrpPunch" style="display: none">
+                    <input type="text" id="bHideAvailability" style="display: none">
+                    <input type="text" id="bDisableSHC" style="display: none">
+                    <input type="text" id="bHideSHCList" style="display: none">
+                </div>
+            </div>
+            <div data-role="footer">
+                <a id="saveSetup" name="saveSetup" data-icon="check" class="ui-btn-left" data-role="button" style="cursor: pointer">Save</a>
+                <a id="cancelSetup" name="cancelSetup" data-icon="delete" class="ui-btn-right" data-role="button" style="cursor: pointer">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+    <div data-role="page" id="Punch">
+        <form>
+            <div id="PunchIOS"><br /><br /></div>
+            <div data-role="header">
+                <h1>Atlas Mobile</h1>
+                <h1>Punch</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <table>
+                    <tr id="punchZDPRow">
+                        <td style="vertical-align: middle">
+                            <label for="szZDPSelect">Department:</label>
+                        </td>
+                        <td>
+                            <select name="szZDPSelect" id="szZDPSelect" data-native-menu="false" class="filterable-select">
+                                <option value="" data-placeholder="true">Select Department</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="punchZAJRow">
+                        <td style="vertical-align: middle">
+                            <label for="szZAJSelect">Job:</label>
+                        </td>
+                        <td>
+                            <select name="szZAJSelect" id="szZAJSelect" data-native-menu="false" class="filterable-select">
+                                <option value="" data-placeholder="true">Select Job</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="punchZATRow">
+                        <td style="vertical-align: middle">
+                            <label for="szZATSelect">Task:</label>
+                        </td>
+                        <td>
+                            <select name="szZATSelect" id="szZATSelect" data-native-menu="false" class="filterable-select">
+                                <option value="" data-placeholder="true">Select Task</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <div style="display: none">
+                    <input type="text" id="zcn_bMinOutDuration" style="display: none">
+                    <input type="text" id="zcn_bDepRequired" style="display: none">
+                    <input type="text" id="zcn_bJobRequired" style="display: none">
+                    <input type="text" id="zcn_bTaskRequired" style="display: none">
+                    <input type="text" id="zcn_bNoGeoPunch" style="display: none">
+                    <input type="text" id="zcn_bDisablePunch" style="display: none">
+                    <input type="text" id="zcn_bGeofenceLockout" style="display: none">
+                    <input type="text" id="zem_bDisableClockOut" style="display: none">
+                    <input type="text" id="zem_szLastPunchType" style="display: none">
+                    <input type="text" id="zem_lLastPunchDate" style="display: none">
+                    <input type="text" id="zem_lLastPunchTime" style="display: none">
+                    <input type="text" id="zem_szLastPunchDepartment" style="display: none">
+                    <input type="text" id="zem_szLastPunchJob" style="display: none">
+                    <input type="text" id="zem_szLastPunchTask" style="display: none">
+                    <input type="text" id="zdp_lCount" style="display: none">
+                    <input type="text" id="zdp_lDepartmentNumber" style="display: none">
+                    <input type="text" id="zaj_lCount" style="display: none">
+                    <input type="text" id="zaj_lJobNumber" style="display: none">
+                    <input type="text" id="zat_lCount" style="display: none">
+                    <input type="text" id="zat_lTaskNumber" style="display: none">
+                    <input type="text" id="zlc_szStatus" style="display: none">
+                    <input type="text" id="zem_lSUP_SysId" style="display: none">
+                    <input type="text" id="zem_SUP_szEmployeeName" style="display: none">
+                    <input type="text" id="zem_SUP_szClockId" style="display: none">
+                    <input type="text" id="nLatitude" style="display: none">
+                    <input type="text" id="nLongitude" style="display: none">
+                    <input type="text" id="zgp_lCount" style="display: none">
+                    <input type="text" id="zgp_lSelectedCount" style="display: none">
+                </div>
+            </div>
+            <div data-role="footer">
+                <a id="savePunch" name="savePunch" data-icon="check" class="ui-btn-left" data-role="button" style="cursor: pointer">Save</a>
+                <a id="cancelPunch" name="cancelPunch" data-icon="delete" class="ui-btn-right" data-role="button" style="cursor: pointer">Cancel</a>
+            </div>
+            <br /><br />
+            <table id="GroupPunchSelectAllTable" style=" width: 100%">
+                <tr>
+                    <td id="GrouPunchSelectAllTd" align="left" style="width:50%">
+                        <a href="#" id="GrouPunchTagAllButton" data-icon="action" data-role="button">Tag All</a>
+                    </td>
+                    <td id="GrouPunchSelectAllTd" align="right" style="width:50%">
+                        <a href="#" id="GrouPunchUntagAllButton" data-icon="action" data-role="button">Untag All</a>
+                    </td>
+                </tr>
+            </table>
+            <div id="GrouPunchTable" style="overflow: auto; width: 100%;"></div>
+        </form>
+    </div>
+
+    <div data-role="page" id="OTA">
+        <form>
+            <div id="OTAIOS"><br /><br /></div>
+            <div data-role="header">
+                <h1>Atlas Mobile</h1>
+                <h1>Other Activity</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <table>
+                    <tr id="otaZDPRow">
+                        <td style="vertical-align: middle">
+                            <label id="1" for="szZDPSelectOTA">Department:</label>
+                        </td>
+                        <td>
+                            <select name="szZDPSelectOTA" id="szZDPSelectOTA" data-native-menu="false" class="filterable-select">
+                                <option value="" data-placeholder="true">Select Department</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="otaZAJRow">
+                        <td style="vertical-align: middle">
+                            <label id="2" for="szZAJSelectOTA">Job:</label>
+                        </td>
+                        <td>
+                            <select name="szZAJSelectOTA" id="szZAJSelectOTA" data-native-menu="false" class="filterable-select">
+                                <option value="" data-placeholder="true">Select Job</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="otaZATRow">
+                        <td style="vertical-align: middle">
+                            <label id="3" for="szZATSelectOTA">Task:</label>
+                        </td>
+                        <td>
+                            <select name="szZATSelectOTA" id="szZATSelectOTA" data-native-menu="false" class="filterable-select">
+                                <option value="" data-placeholder="true">Select Task</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="szOTASelect">Other Activity:</label>
+                        </td>
+                        <td>
+                            <select name="szOTASelect" id="szOTASelect" data-native-menu="false" class="filterable-select">
+                                <option value="" data-placeholder="true">Select Other Activity</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label id="OTAType" for="nOtherAmount">Amount:</label>
+                        </td>
+                        <td>
+                            <input type="number" name="Other Hour/Amount" id="nOtherAmount" value="">
+                        </td>
+                    </tr>
+                </table>
+                <div style="display: none">
+                    <input type="text" id="zem_lCDP_SysId" style="display: none">
+                    <input type="text" id="zem_szDepartment" style="display: none">
+                    <input type="text" id="zem_lDepartmentNumber" style="display: none">
+                    <input type="text" id="zem_lJOB_SysId" style="display: none">
+                    <input type="text" id="zem_szJobDescription" style="display: none">
+                    <input type="text" id="zem_lJobNumber" style="display: none">
+                    <input type="text" id="zem_lASK_SysId" style="display: none">
+                    <input type="text" id="zem_szTaskDescription" style="display: none">
+                    <input type="text" id="zem_lTaskNumber" style="display: none">
+                </div>
+            </div>
+            <div data-role="footer">
+                <a id="saveOTA" name="saveOTA" data-icon="check" class="ui-btn-left" data-role="button" style="cursor: pointer">Save</a>
+                <a id="cancelOTA" name="cancelOTA" data-icon="delete" class="ui-btn-right" data-role="button" style="cursor: pointer">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+    <div data-role="page" id="LockoutOverride">
+        <form>
+            <div id="LockoutOverrideIOS"><br /><br /></div>
+            <div data-role="header">
+                <h1>Atlas Mobile</h1>
+                <h1>Override Lockout</h1>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="sup_szClockId">Clock Id:</label>
+                        </td>
+                        <td>
+                            <input type="text" name="sup_szClockId" id="sup_szClockId" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="sup_szClockPassword">Clock Password:</label>
+                        </td>
+                        <td>
+                            <input type="password" name="sup_szClockPassword" id="sup_szClockPassword" value="">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div data-role="footer">
+                <a id="saveLockoutOverride" name="saveLockoutOverride" data-icon="check" class="ui-btn-left" data-role="button" style="cursor: pointer">Save</a>
+                <a id="cancelLockoutOverride" name="cancelLockoutOverride" data-icon="delete" class="ui-btn-right" data-role="button" style="cursor: pointer">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+    <div data-role="page" id="LockoutOverrideRequest">
+        <form>
+            <div id="LockoutOverrideRequestIOS"><br /><br /></div>
+            <div data-role="header">
+                <h1>Atlas Mobile</h1>
+                <h1>Override Lockout</h1>
+            </div>
+            <div>
+                <h3 id="lockoutReason" style="text-align:center"></h3>
+            </div>
+            <div data-role="footer">
+                <a id="saveLockoutOverrideRequest" name="saveLockoutOverrideRequest" data-icon="check" class="ui-btn-left" data-role="button" style="cursor: pointer">Override</a>
+                <a id="cancelLockoutOverrideRequest" name="cancelLockoutOverrideRequest" data-icon="delete" class="ui-btn-right" data-role="button" style="cursor: pointer">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+
+    <div data-role="page" id="Timecard">
+        <div id="TimecardIOS"><br /><br /></div>
+        <div data-role="header">
+            <h1>Atlas Mobile</h1>
+            <h1>View Timecard</h1>
+            <a href="#TimecardMenu" data-icon="bars" class="ui-btn-left">Menu</a>
+            <a href="#Home" data-icon="home" class="ui-btn-right" data-transition="slide">Home</a>
+        </div>
+        <div data-role="panel" id="TimecardMenu" data-position="left" data-display="push" style="background-color:#e5d5c3">
+            <ul style="list-style: none; text-align: left">
+                <li><a id="Timecard_Overview" href="#Overview" data-transition="slide" class="ui-link ui-btn ui-icon-info ui-btn-icon-left">Overview</a></li>
+                <li><a id="Timecard_Punch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Punch</a></li>
+                <li><a id="Timecard_GroupPunch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Group Punch</a></li>
+                <li><a id="Timecard_Transfer" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Transfer</a></li>
+                <li><a id="Timecard_OTA" href="#OTA" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Enter Other Activity</a></li>
+                <li><a id="Timecard_TimecardNote" href="#TimecardNote" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Timecard Note</a></li>
+                <li><a id="Timecard_Schedule" href="#Schedule" data-transition="slide" class="ui-link ui-btn ui-icon-calendar ui-btn-icon-left">View Schedule</a></li>
+                <li><a id="Timecard_ScheduleCover" href="#ScheduleCover" data-transition="slide" class="ui-link ui-btn ui-icon-calendar ui-btn-icon-left">View Cover Requests</a></li>
+                <li><a id="Timecard_Accrual" href="#Accrual" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Accruals</a></li>
+                <li><a id="Timecard_Availability" href="#Availability" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Availability</a></li>
+                <li><a id="Timecard_Messages" href="#Messages" data-transition="slide" class="ui-link ui-btn ui-icon-mail ui-btn-icon-left">View Messages</a></li>
+                <li><a id="Timecard_Transactions" href="#Transactions" data-transition="slide" class="ui-link ui-btn ui-icon-grid ui-btn-icon-left">Transactions</a></li>
+                <li><a id="Timecard_Note" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">New Message</a></li>
+                <li><a id="Timecard_NewSCH" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Request</a></li>
+                <li><a id="Timecard_NewSWAP" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Swap Request</a></li>
+                <li><a id="Timecard_NewOTA" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Request Time Off</a></li>
+                <li><a id="Timecard_Setup" href="#Setup" data-transition="slide" class="ui-link ui-btn ui-icon-gear ui-btn-icon-left">Setup</a></li>
+                <li><a id="Timecard_Logout" href="#Login" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Logout</a></li>
+                <li><a id="Timecard_About" href="#About" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">About</a></li>
+                <li><a id="Timecard_Exit" href="#Exit" data-transition="slide" class="ui-link ui-btn ui-icon-action ui-btn-icon-left">Exit</a></li>
+            </ul>
+        </div>
+        <div data-role="main" class="ui-content">
+            <table id="timecardFilter">
+                <tr>
+                    <td id="timecardRangdTd">
+                        <select name="szTimecardDateRangeFilter" id="szTimecardDateRangeFilter" data-inline="true">
+                            <option value="Last And Current">Last And Current</option>
+                            <option value="Last">Last</option>
+                            <option value="Current">Current</option>
+                        </select>
+                    </td>
+                    <td id="reviewButtonTd">
+                        <a href="#" id="reviwTimecard" data-icon="action" data-role="button">Review</a>
+                    </td>
+                </tr>
+            </table>
+            <div id="timecardTable" style="overflow: auto; width: 100%;"></div>
+        </div>
+    </div>
+
+    <div data-role="page" id="TimecardNote">
+        <form>
+            <div id="TimecardNoteIOS"><br /><br /></div>
+            <div data-role="header">
+                <h1>Atlas Mobile</h1>
+                <h1>Timecard Note</h1>
+                <a href="#TimecardNoteMenu" data-icon="bars" class="ui-btn-left">Menu</a>
+                <a href="#Home" data-icon="home" class="ui-btn-right" data-transition="slide">Home</a>
+            </div>
+            <div data-role="panel" id="TimecardNoteMenu" data-position="left" data-display="push" style="background-color:#e5d5c3">
+                <ul style="list-style: none; text-align: left">
+                    <li><a id="TimecardNote_Overview" href="#Overview" data-transition="slide" class="ui-link ui-btn ui-icon-info ui-btn-icon-left">Overview</a></li>
+                    <li><a id="TimecardNote_Punch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Punch</a></li>
+                    <li><a id="TimecardNote_GroupPunch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Group Punch</a></li>
+                    <li><a id="TimecardNote_Transfer" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Transfer</a></li>
+                    <li><a id="TimecardNote_OTA" href="#OTA" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Enter Other Activity</a></li>
+                    <li><a id="TimecardNote_Timecard" href="#Timecard" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Timecard Note</a></li>
+                    <li><a id="TimecardNote_Schedule" href="#Schedule" data-transition="slide" class="ui-link ui-btn ui-icon-calendar ui-btn-icon-left">View Schedule</a></li>
+                    <li><a id="TimecardNote_ScheduleCover" href="#ScheduleCover" data-transition="slide" class="ui-link ui-btn ui-icon-calendar ui-btn-icon-left">View Cover Requests</a></li>
+                    <li><a id="TimecardNote_Accrual" href="#Accrual" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Accruals</a></li>
+                    <li><a id="TimecardNote_Availability" href="#Availability" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Availability</a></li>
+                    <li><a id="TimecardNote_Messages" href="#Messages" data-transition="slide" class="ui-link ui-btn ui-icon-mail ui-btn-icon-left">View Messages</a></li>
+                    <li><a id="TimecardNote_Transactions" href="#Transactions" data-transition="slide" class="ui-link ui-btn ui-icon-grid ui-btn-icon-left">Transactions</a></li>
+                    <li><a id="TimecardNote_Note" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">New Message</a></li>
+                    <li><a id="TimecardNote_NewSCH" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Request</a></li>
+                    <li><a id="TimecardNote_NewSWAP" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Swap Request</a></li>
+                    <li><a id="TimecardNote_NewOTA" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Request Time Off</a></li>
+                    <li><a id="TimecardNote_Setup" href="#Setup" data-transition="slide" class="ui-link ui-btn ui-icon-gear ui-btn-icon-left">Setup</a></li>
+                    <li><a id="TimecardNote_Logout" href="#Login" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Logout</a></li>
+                    <li><a id="TimecardNote_About" href="#About" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">About</a></li>
+                    <li><a id="TimecardNote_Exit" href="#Exit" data-transition="slide" class="ui-link ui-btn ui-icon-action ui-btn-icon-left">Exit</a></li>
+                </ul>
+            </div>
+            <div data-role="main" class="ui-content">
+                <table>
+                    <tr>
+                        <td style="vertical-align: top">
+                            <label for="szMessageText">
+                                <br />
+                                Note:
+                            </label>
+                        </td>
+                        <td>
+                            <textarea name="Note" id="szTimecardNote"></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div data-role="footer">
+                <a id="saveTimecardNote" name="saveTimecardNote" data-icon="check" class="ui-btn-left" data-role="button" style="cursor: pointer">Save</a>
+                <a id="cancelTimecardNote" name="cancelTimecardNote" data-icon="delete" class="ui-btn-right" data-role="button" style="cursor: pointer">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+    <div data-role="page" id="Schedule">
+        <div id="ScheduleIOS"><br /><br /></div>
+        <div data-role="header">
+            <h1>Atlas Mobile</h1>
+            <h1>View Schedule</h1>
+            <a href="#ScheduleMenu" data-icon="bars" class="ui-btn-left">Menu</a>
+            <a href="#Home" data-icon="home" class="ui-btn-right" data-transition="slide">Home</a>
+        </div>
+        <div data-role="panel" id="ScheduleMenu" data-position="left" data-display="push" style="background-color:#e5d5c3">
+            <ul style="list-style: none; text-align: left">
+                <li><a id="Schedule_Overview" href="#Overview" data-transition="slide" class="ui-link ui-btn ui-icon-info ui-btn-icon-left">Overview</a></li>
+                <li><a id="Schedule_Punch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Punch</a></li>
+                <li><a id="Schedule_GroupPunch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Group Punch</a></li>
+                <li><a id="Schedule_Transfer" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Transfer</a></li>
+                <li><a id="Schedule_OTA" href="#OTA" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Enter Other Activity</a></li>
+                <li><a id="Schedule_Timecard" href="#Timecard" data-transition="slide" class="ui-link ui-btn ui-icon-bullets ui-btn-icon-left">View Timecard</a></li>
+                <li><a id="Schedule_TimecardNote" href="#TimecardNote" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Timecard Note</a></li>
+                <li><a id="Schedule_ScheduleCover" href="#ScheduleCover" data-transition="slide" class="ui-link ui-btn ui-icon-calendar ui-btn-icon-left">View Cover Requests</a></li>
+                <li><a id="Schedule_Accrual" href="#Accrual" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Accruals</a></li>
+                <li><a id="Schedule_Availability" href="#Availability" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Availability</a></li>
+                <li><a id="Schedule_Messages" href="#Messages" data-transition="slide" class="ui-link ui-btn ui-icon-mail ui-btn-icon-left">View Messages</a></li>
+                <li><a id="Schedule_Transactions" href="#Transactions" data-transition="slide" class="ui-link ui-btn ui-icon-grid ui-btn-icon-left">Transactions</a></li>
+                <li><a id="Schedule_Note" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">New Message</a></li>
+                <li><a id="Schedule_NewSCH" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Request</a></li>
+                <li><a id="Schedule_NewSWAP" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Swap Request</a></li>
+                <li><a id="Schedule_NewOTA" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Request Time Off</a></li>
+                <li><a id="Schedule_Setup" href="#Setup" data-transition="slide" class="ui-link ui-btn ui-icon-gear ui-btn-icon-left">Setup</a></li>
+                <li><a id="Schedule_Logout" href="#Login" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Logout</a></li>
+                <li><a id="Schedule_About" href="#About" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">About</a></li>
+                <li><a id="Schedule_Exit" href="#Exit" data-transition="slide" class="ui-link ui-btn ui-icon-action ui-btn-icon-left">Exit</a></li>
+            </ul>
+        </div>
+        <div data-role="main" class="ui-content">
+            <table id="RequestScheduleCoverTable">
+                <tr>
+                    <td id="RequestScheduleCoverTd">
+                        <a href="#" id="RequestScheduleCover" data-icon="action" data-role="button">Request Schedule Cover</a>
+                    </td>
+                </tr>
+            </table>
+            <div id="scheduleTable" style="overflow: auto; width: 100%;"></div>
+        </div>
+    </div>
+
+    <div data-role="page" id="ScheduleCover">
+        <div id="ScheduleCoverIOS"><br /><br /></div>
+        <div data-role="header">
+            <h1>Atlas Mobile</h1>
+            <h1>View Cover Requests</h1>
+            <a href="#ScheduleCoverMenu" data-icon="bars" class="ui-btn-left">Menu</a>
+            <a href="#Home" data-icon="home" class="ui-btn-right" data-transition="slide">Home</a>
+        </div>
+        <div data-role="panel" id="ScheduleCoverMenu" data-position="left" data-display="push" style="background-color:#e5d5c3">
+            <ul style="list-style: none; text-align: left">
+                <li><a id="ScheduleCover_Overview" href="#Overview" data-transition="slide" class="ui-link ui-btn ui-icon-info ui-btn-icon-left">Overview</a></li>
+                <li><a id="ScheduleCover_Punch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Punch</a></li>
+                <li><a id="ScheduleCover_GroupPunch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Group Punch</a></li>
+                <li><a id="ScheduleCover_Transfer" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Transfer</a></li>
+                <li><a id="ScheduleCover_OTA" href="#OTA" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Enter Other Activity</a></li>
+                <li><a id="ScheduleCover_Timecard" href="#Timecard" data-transition="slide" class="ui-link ui-btn ui-icon-bullets ui-btn-icon-left">View Timecard</a></li>
+                <li><a id="ScheduleCover_TimecardNote" href="#TimecardNote" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Timecard Note</a></li>
+                <li><a id="ScheduleCover_Schedule" href="#Schedule" data-transition="slide" class="ui-link ui-btn ui-icon-calendar ui-btn-icon-left">View Schedule</a></li>
+                <li><a id="ScheduleCover_Accrual" href="#Accrual" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Accruals</a></li>
+                <li><a id="ScheduleCover_Availability" href="#Availability" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Availability</a></li>
+                <li><a id="ScheduleCover_Messages" href="#Messages" data-transition="slide" class="ui-link ui-btn ui-icon-mail ui-btn-icon-left">View Messages</a></li>
+                <li><a id="ScheduleCover_Transactions" href="#Transactions" data-transition="slide" class="ui-link ui-btn ui-icon-grid ui-btn-icon-left">Transactions</a></li>
+                <li><a id="ScheduleCover_Note" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">New Message</a></li>
+                <li><a id="ScheduleCover_NewSCH" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Request</a></li>
+                <li><a id="ScheduleCover_NewSWAP" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Swap Request</a></li>
+                <li><a id="ScheduleCover_NewOTA" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Request Time Off</a></li>
+                <li><a id="ScheduleCover_Setup" href="#Setup" data-transition="slide" class="ui-link ui-btn ui-icon-gear ui-btn-icon-left">Setup</a></li>
+                <li><a id="ScheduleCover_Logout" href="#Login" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Logout</a></li>
+                <li><a id="ScheduleCover_About" href="#About" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">About</a></li>
+                <li><a id="ScheduleCover_Exit" href="#Exit" data-transition="slide" class="ui-link ui-btn ui-icon-action ui-btn-icon-left">Exit</a></li>
+            </ul>
+        </div>
+        <div data-role="main" class="ui-content">
+            <table id="ScheduleCoverTableHeader" style="position:fixed">
+                <tr>
+                    <td id="CoverScheduleTd">
+                        <a href="#" id="CoverSchedule" data-icon="action" data-role="button">Cover Schedule</a>
+                    </td>
+                    <td id="DeleteCoverTd">
+                        <a href="#" id="DeleteCoverSchedule" data-icon="action" data-role="button">Delete</a>
+                    </td>
+                </tr>
+            </table>
+            <div id="scheduleCoverTable" style="overflow: auto; width: 100%;"></div>
+        </div>
+    </div>
+
+
+    <div data-role="page" id="Accrual">
+        <div id="AccrualIOS"><br /><br /></div>
+        <div data-role="header">
+            <h1>Atlas Mobile</h1>
+            <h1>View Accruals</h1>
+            <a href="#AccrualMenu" data-icon="bars" class="ui-btn-left">Menu</a>
+            <a href="#Home" data-icon="home" class="ui-btn-right" data-transition="slide">Home</a>
+        </div>
+        <div data-role="panel" id="AccrualMenu" data-position="left" data-display="push" style="background-color:#e5d5c3">
+            <ul style="list-style: none; text-align: left">
+                <li><a id="Accrual_Overview" href="#Overview" data-transition="slide" class="ui-link ui-btn ui-icon-info ui-btn-icon-left">Overview</a></li>
+                <li><a id="Accrual_Punch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Punch</a></li>
+                <li><a id="Accrual_GroupPunch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Group Punch</a></li>
+                <li><a id="Accrual_Transfer" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Transfer</a></li>
+                <li><a id="Accrual_OTA" href="#OTA" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Enter Other Activity</a></li>
+                <li><a id="Accrual_Timecard" href="#Timecard" data-transition="slide" class="ui-link ui-btn ui-icon-bullets ui-btn-icon-left">View Timecard</a></li>
+                <li><a id="Accrual_TimecardNote" href="#TimecardNote" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Timecard Note</a></li>
+                <li><a id="Accrual_Schedule" href="#Schedule" data-transition="slide" class="ui-link ui-btn ui-icon-calendar ui-btn-icon-left">View Schedule</a></li>
+                <li><a id="Accrual_ScheduleCover" href="#ScheduleCover" data-transition="slide" class="ui-link ui-btn ui-icon-calendar ui-btn-icon-left">View Cover Requests</a></li>
+                <li><a id="Accrual_Availability" href="#Availability" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Availability</a></li>
+                <li><a id="Accrual_Messages" href="#Messages" data-transition="slide" class="ui-link ui-btn ui-icon-mail ui-btn-icon-left">View Messages</a></li>
+                <li><a id="Accrual_Transactions" href="#Transactions" data-transition="slide" class="ui-link ui-btn ui-icon-grid ui-btn-icon-left">Transactions</a></li>
+                <li><a id="Accrual_Note" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">New Message</a></li>
+                <li><a id="Accrual_NewSCH" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Request</a></li>
+                <li><a id="Accrual_NewSWAP" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Swap Request</a></li>
+                <li><a id="Accrual_NewOTA" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Request Time Off</a></li>
+                <li><a id="Accrual_Setup" href="#Setup" data-transition="slide" class="ui-link ui-btn ui-icon-gear ui-btn-icon-left">Setup</a></li>
+                <li><a id="Accrual_Logout" href="#Login" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Logout</a></li>
+                <li><a id="Accrual_About" href="#About" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">About</a></li>
+                <li><a id="Accrual_Exit" href="#Exit" data-transition="slide" class="ui-link ui-btn ui-icon-action ui-btn-icon-left">Exit</a></li>
+            </ul>
+        </div>
+        <div data-role="main" class="ui-content">
+            <div id="AccrualTable" style="overflow: auto; width: 100%;"></div>
+        </div>
+    </div>
+
+    <div data-role="page" id="Availability">
+        <div id="AvailabilityIOS"><br /><br /></div>
+        <div data-role="header">
+            <h1>Atlas Mobile</h1>
+            <h1>View Availability</h1>
+            <a href="#AvailabilityMenu" data-icon="bars" class="ui-btn-left">Menu</a>
+            <a href="#Home" data-icon="home" class="ui-btn-right" data-transition="slide">Home</a>
+        </div>
+        <div data-role="panel" id="AvailabilityMenu" data-position="left" data-display="push" style="background-color:#e5d5c3">
+            <ul style="list-style: none; text-align: left">
+                <li><a id="Availability_Overview" href="#Overview" data-transition="slide" class="ui-link ui-btn ui-icon-info ui-btn-icon-left">Overview</a></li>
+                <li><a id="Availability_Punch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Punch</a></li>
+                <li><a id="Availability_GroupPunch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Group Punch</a></li>
+                <li><a id="Availability_Transfer" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Transfer</a></li>
+                <li><a id="Availability_OTA" href="#OTA" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Enter Other Activity</a></li>
+                <li><a id="Availability_Timecard" href="#Timecard" data-transition="slide" class="ui-link ui-btn ui-icon-bullets ui-btn-icon-left">View Timecard</a></li>
+                <li><a id="Availability_TimecardNote" href="#TimecardNote" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Timecard Note</a></li>
+                <li><a id="Availability_Schedule" href="#Schedule" data-transition="slide" class="ui-link ui-btn ui-icon-calendar ui-btn-icon-left">View Schedule</a></li>
+                <li><a id="Availability_ScheduleCover" href="#ScheduleCover" data-transition="slide" class="ui-link ui-btn ui-icon-calendar ui-btn-icon-left">View Cover Requests</a></li>
+                <li><a id="Availability_Accrual" href="#Accrual" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Accruals</a></li>
+                <li><a id="Availability_Messages" href="#Messages" data-transition="slide" class="ui-link ui-btn ui-icon-mail ui-btn-icon-left">View Messages</a></li>
+                <li><a id="Availability_Transactions" href="#Transactions" data-transition="slide" class="ui-link ui-btn ui-icon-grid ui-btn-icon-left">Transactions</a></li>
+                <li><a id="Availability_Note" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">New Message</a></li>
+                <li><a id="Availability_NewSCH" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Request</a></li>
+                <li><a id="Availability_NewSWAP" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Swap Request</a></li>
+                <li><a id="Availability_NewOTA" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Request Time Off</a></li>
+                <li><a id="Availability_Setup" href="#Setup" data-transition="slide" class="ui-link ui-btn ui-icon-gear ui-btn-icon-left">Setup</a></li>
+                <li><a id="Availability_Logout" href="#Login" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Logout</a></li>
+                <li><a id="Schedule_About" href="#About" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">About</a></li>
+                <li><a id="Availability_Exit" href="#Exit" data-transition="slide" class="ui-link ui-btn ui-icon-action ui-btn-icon-left">Exit</a></li>
+            </ul>
+        </div>
+        <div data-role="main" class="ui-content">
+            <div id="availabilityTable" style="overflow: auto; width: 100%;"></div>
+        </div>
+    </div>
+
+
+    <div data-role="page" id="AvailabilityForm" data-dom-cache="true">
+        <form>
+            <div id="AvailabilityFormIOS"><br /><br /></div>
+            <div data-role="header">
+                <h1>Atlas Mobile</h1>
+                <h1 id="szAvailabilityHeader">Availabilit</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <table>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="szDayOfWeek">Day Of Week:</label>
+                        </td>
+                        <td>
+                            <input type="text" name="Day Of Week" id="szDayOfWeek" value="" readonly style="background-color: silver;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="lStartTimeOne">Start Time One:</label>
+                        </td>
+                        <td>
+                            <input type="time" name="Start Time One" id="lStartTimeOne" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="lStopTimeOne">Stop Time One:</label>
+                        </td>
+                        <td>
+                            <input type="time" name="Stop Time One" id="lStopTimeOne" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="lStartTimeTwo">Start Time Two:</label>
+                        </td>
+                        <td>
+                            <input type="time" name="Start Time Two" id="lStartTimeTwo" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="lStopTimeTwo">Stop Time Two:</label>
+                        </td>
+                        <td>
+                            <input type="time" name="Stop Time Two" id="lStopTimeTwo" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="lStartTimeThree">Start Time Three:</label>
+                        </td>
+                        <td>
+                            <input type="time" name="Start Time Three" id="lStartTimeThree" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="lStopTimeThree">Stop Time Three:</label>
+                        </td>
+                        <td>
+                            <input type="time" name="Stop Time Three" id="lStopTimeThree" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="lValidDateRangeFrom">Valid Date From:</label>
+                        </td>
+                        <td>
+                            <input type="date" name="Valid Date From" id="lValidDateRangeFrom" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="lValidDateRangeTo">Valid Date To:</label>
+                        </td>
+                        <td>
+                            <input type="date" name="Valid Date To" id="lValidDateRangeTo" value="">
+                        </td>
+                    </tr>
+                </table>
+                <div style="display: none;">
+                    <input type="text" id="bDayOfWeekNumber" style="display: none">
+                    <input type="text" id="lCEM_SysIdAvailability" style="display: none">
+                </div>
+            </div>
+            <div data-role="footer">
+                <a id="saveAvailability" name="saveAvailability" data-icon="check" class="ui-btn-left" data-role="button" style="cursor: pointer">Save</a>
+                <a id="cancelAvailability" name="cancelAvailability" data-icon="delete" class="ui-btn-right" data-role="button" style="cursor: pointer">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+    <div data-role="page" id="Transactions">
+        <div id="TransactionsIOS"><br /><br /></div>
+        <div data-role="header">
+            <h1>Atlas Mobile</h1>
+            <h1>Transactions</h1>
+            <a href="#TransactionsMenu" data-icon="bars" class="ui-btn-left">Menu</a>
+            <a href="#Home" data-icon="home" class="ui-btn-right" data-transition="slide">Home</a>
+        </div>
+        <div data-role="panel" id="TransactionsMenu" data-position="left" data-display="push" style="background-color:#e5d5c3">
+            <ul style="list-style: none; text-align: left">
+                <li><a id="Transactions_Overview" href="#Overview" data-transition="slide" class="ui-link ui-btn ui-icon-info ui-btn-icon-left">Overview</a></li>
+                <li><a id="Transactions_Punch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Punch</a></li>
+                <li><a id="Transactions_GroupPunch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Group Punch</a></li>
+                <li><a id="Transactions_Transfer" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Transfer</a></li>
+                <li><a id="Transactions_OTA" href="#OTA" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Enter Other Activity</a></li>
+                <li><a id="Transactions_Timecard" href="#Timecard" data-transition="slide" class="ui-link ui-btn ui-icon-bullets ui-btn-icon-left">View Timecard</a></li>
+                <li><a id="Transactions_TimecardNote" href="#TimecardNote" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Timecard Note</a></li>
+                <li><a id="Transactions_Schedule" href="#Schedule" data-transition="slide" class="ui-link ui-btn ui-icon-calendar ui-btn-icon-left">View Schedule</a></li>
+                <li><a id="Transactions_ScheduleCover" href="#ScheduleCover" data-transition="slide" class="ui-link ui-btn ui-icon-calendar ui-btn-icon-left">View Cover Requests</a></li>
+                <li><a id="Transactions_Accrual" href="#Accrual" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Accruals</a></li>
+                <li><a id="Transactions_Availability" href="#Availability" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Availability</a></li>
+                <li><a id="Transactions_Messages" href="#Messages" data-transition="slide" class="ui-link ui-btn ui-icon-mail ui-btn-icon-left">View Messages</a></li>
+                <li><a id="Transactions_Note" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">New Message</a></li>
+                <li><a id="Transactions_NewSCH" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Request</a></li>
+                <li><a id="Transactions_NewSWAP" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Swap Request</a></li>
+                <li><a id="Transactions_NewOTA" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Request Time Off</a></li>
+                <li><a id="Transactions_Setup" href="#Setup" data-transition="slide" class="ui-link ui-btn ui-icon-gear ui-btn-icon-left">Setup</a></li>
+                <li><a id="Transactions_Logout" href="#Login" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Logout</a></li>
+                <li><a id="Transactions_About" href="#About" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">About</a></li>
+                <li><a id="Transactions_Exit" href="#Exit" data-transition="slide" class="ui-link ui-btn ui-icon-action ui-btn-icon-left">Exit</a></li>
+            </ul>
+        </div>
+        <div data-role="main" class="ui-content">
+            <div data-role="tabs" id="TransactionsTab">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#PendingTransactions" id="PendingTab">Pending</a></li>
+                        <li><a href="#FailedTransactions" id="FailedTab">Failed</a></li>
+                        <li><a href="#SentTransactions" id="SentTab">Sent</a></li>
+                    </ul>
+                </div>
+                <div id="PendingTransactions">
+                    <div id="PendingTransactionsTable" style="overflow: auto; width: 100%;"></div>
+                </div>
+                <div id="FailedTransactions">
+                    <div id="FailedTransactionsTable" style="overflow: auto; width: 100%;"></div>
+                </div>
+                <div id="SentTransactions">
+                    <div id="SentTransactionsTable" style="overflow: auto; width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+        <div data-role="footer">
+            <a id="ResendFailed" name="ResendFailed" data-icon="action" class="ui-btn-right" data-role="button" style="cursor: pointer">Re-Send</a>
+        </div>
+    </div>
+
+    <div data-role="page" id="Messages">
+        <div id="MessagesIOS"><br /><br /></div>
+        <div data-role="header">
+            <h1>Atlas Mobile</h1>
+            <h1>View Messages</h1>
+            <a href="#MessagesMenu" data-icon="bars" class="ui-btn-left">Menu</a>
+            <a href="#Home" data-icon="home" class="ui-btn-right" data-transition="slide">Home</a>
+        </div>
+        <div data-role="panel" id="MessagesMenu" data-position="left" data-display="push" style="background-color:#e5d5c3">
+            <ul style="list-style: none; text-align: left">
+                <li><a id="Messages_Overview" href="#Overview" data-transition="slide" class="ui-link ui-btn ui-icon-info ui-btn-icon-left">Overview</a></li>
+                <li><a id="Messages_Punch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Punch</a></li>
+                <li><a id="Messages_GroupPunch" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Group Punch</a></li>
+                <li><a id="Messages_Transfer" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Transfer</a></li>
+                <li><a id="Messages_OTA" href="#OTA" data-transition="slide" class="ui-link ui-btn ui-icon-plus ui-btn-icon-left">Enter Other Activity</a></li>
+                <li><a id="Messages_Timecard" href="#Timecard" data-transition="slide" class="ui-link ui-btn ui-icon-bullets ui-btn-icon-left">View Timecard</a></li>
+                <li><a id="Messages_TimecardNote" href="#TimecardNote" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Timecard Note</a></li>
+                <li><a id="Messages_Schedule" href="#Schedule" data-transition="slide" class="ui-link ui-btn ui-icon-calendar ui-btn-icon-left">View Schedule</a></li>
+                <li><a id="Messages_ScheduleCover" href="#ScheduleCover" data-transition="slide" class="ui-link ui-btn ui-icon-calendar ui-btn-icon-left">View Cover Requests</a></li>
+                <li><a id="Messages_Accrual" href="#Accrual" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Accruals</a></li>
+                <li><a id="Messages_Availability" href="#Availability" data-transition="slide" class="ui-link ui-btn ui-icon-clock ui-btn-icon-left">View Availability</a></li>
+                <li><a id="Messages_Transactions" href="#Transactions" data-transition="slide" class="ui-link ui-btn ui-icon-grid ui-btn-icon-left">Transactions</a></li>
+                <li><a id="Messages_Note" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">New Message</a></li>
+                <li><a id="Messages_NewSCH" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Request</a></li>
+                <li><a id="Messages_NewSWAP" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Schedule Swap Request</a></li>
+                <li><a id="Messages_NewOTA" href="#OutgoingMessage" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Request Time Off</a></li>
+                <li><a id="Messages_Setup" href="#Setup" data-transition="slide" class="ui-link ui-btn ui-icon-gear ui-btn-icon-left">Setup</a></li>
+                <li><a id="Messages_Logout" href="#Login" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">Logout</a></li>
+                <li><a id="Messages_About" href="#About" data-transition="slide" class="ui-link ui-btn ui-icon-comment ui-btn-icon-left">About</a></li>
+                <li><a id="Messages_Exit" href="#Exit" data-transition="slide" class="ui-link ui-btn ui-icon-action ui-btn-icon-left">Exit</a></li>
+            </ul>
+        </div>
+        <div data-role="main" class="ui-content">
+            <div data-role="tabs" id="MessageTab">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#Incoming" id="IncomingTab">Incoming</a></li>
+                        <li><a href="#Outgoing" id="OutgoingTab">Outgoing</a></li>
+                    </ul>
+                </div>
+                <div id="Incoming">
+                    <div id="IncomingTable" style="overflow: auto; width: 100%;"></div>
+                </div>
+                <div id="Outgoing">
+                    <div id="OutgoingTable" style="overflow: auto; width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div data-role="page" id="OutgoingMessage" data-dom-cache="true">
+        <form>
+            <div id="OutgoingMessageIOS"><br /><br /></div>
+            <div data-role="header">
+                <h1>Atlas Mobile</h1>
+                <h1 id="szOutgoingMessageHeader">Outgoing Messages</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <table>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="szMessageType">Type:</label>
+                        </td>
+                        <td>
+                            <input type="text" name="Message Type" id="szMessageType" value="" readonly style="background-color: silver;">
+                        </td>
+                    </tr>
+                    <tr id="FromName">
+                        <td style="vertical-align: middle">
+                            <label for="szMessageFromEmployeeName">From:</label>
+                        </td>
+                        <td>
+                            <input type="text" name="Sent To" id="szMessageFromEmployeeName" value="" readonly style="background-color: silver;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="szMessageToEmployeeName">To:</label>
+                        </td>
+                        <td>
+                            <input type="text" name="Sent To" id="szMessageToEmployeeName" value="Supervisor" readonly style="background-color: silver;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="szMessageDescription">Description:</label>
+                        </td>
+                        <td>
+                            <input type="text" name="Message Description" id="szMessageDescription" value="">
+                        </td>
+                    </tr>
+                    <tr id="DateFrom">
+                        <td style="vertical-align: middle">
+                            <label for="lDateRequestFrom">From Date:</label>
+                        </td>
+                        <td>
+                            <input type="date" name="Date Request From" id="lDateRequestFrom" value="">
+                        </td>
+                    </tr>
+                    <tr id="szSwapWithRow">
+                        <td style="vertical-align: middle">
+                            <label for="szSWPSelect">Swap With:</label>
+                        </td>
+                        <td>
+                            <select name="szSWPSelect" id="szSWPSelect" data-native-menu="false" class="filterable-select">
+                                <option value="" data-placeholder="true">Select Employee</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="szSwapWithViewRow">
+                        <td style="vertical-align: middle">
+                            <label for="szSwapWithEmployeeName">Swap With:</label>
+                        </td>
+                        <td>
+                            <input type="text" name="Swap With" id="szSwapWithEmployeeName" value="">
+                        </td>
+                    </tr>
+                    <tr id="DateTo">
+                        <td style="vertical-align: middle">
+                            <label for="lDateRequestTo">To Date:</label>
+                        </td>
+                        <td>
+                            <input type="date" name="Date Request To" id="lDateRequestTo" value="">
+                        </td>
+                    </tr>
+                    <tr id="TimeFrom">
+                        <td style="vertical-align: middle">
+                            <label for="lTimeRequestFrom">From Time:</label>
+                        </td>
+                        <td>
+                            <input type="time" name="Daily Time Request From" id="lTimeRequestFrom" value="">
+                        </td>
+                    </tr>
+                    <tr id="TimeTo">
+                        <td style="vertical-align: middle">
+                            <label for="lTimeRequestTo">To Time:</label>
+                        </td>
+                        <td>
+                            <input type="time" name="Daily Time Request To" id="lTimeRequestTo" value="">
+                        </td>
+                    </tr>
+                    <tr id="OTAHours">
+                        <td style="vertical-align: middle">
+                            <label for="nDailyOTAHours">Daily Hours:</label>
+                        </td>
+                        <td>
+                            <input type="number" name="Daily Hours" id="nDailyOTAHours" value="">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="vertical-align: top">
+                            <label for="szMessageText">
+                                <br />
+                                Message:
+                            </label>
+                        </td>
+                        <td>
+                            <textarea name="Message" id="szMessageText"></textarea>
+                        </td>
+                    </tr>
+                </table>
+                <div style="display: none;">
+                    <input type="text" id="szRequestApproved" style="display: none">
+                    <input type="text" id="bInternetRequired" style="display: none">
+                    <input type="text" id="szRequestStatus" style="display: none">
+                    <input type="text" id="lDateRead" style="display: none">
+                    <input type="text" id="lTimeRead" style="display: none">
+                    <input type="text" id="lCEC_SysId" style="display: none">
+                    <input type="text" id="lMessageID" style="display: none">
+                    <input type="text" id="lReplyToCEM_SysId" style="display: none">
+                    <input type="text" id="lSwapWithCEM_SysId" style="display: none">
+                    <input type="text" id="swp_lCount" style="display: none">
+                </div>
+            </div>
+            <div data-role="footer">
+                <a id="replyOutgoingMessage" name="replyOutgoingMessage" data-icon="mail" class="ui-btn-left" data-role="button" style="cursor: pointer">Reply</a>
+                <a id="saveOutgoingMessage" name="saveOutgoingMessage" data-icon="check" class="ui-btn-left" data-role="button" style="cursor: pointer">Save</a>
+                <a id="approveOutgoingMessage" name="approveOutgoingMessage" data-icon="check" class="ui-btn-left" data-role="button" style="cursor: pointer">Approve</a>
+                <a id="declineOutgoingMessage" name="declineOutgoingMessage" data-icon="delete" class="ui-btn-left" data-role="button" style="cursor: pointer">Decline</a>
+                <a id="cancelOutgoingMessage" name="cancelOutgoingMessage" data-icon="delete" class="ui-btn-right" data-role="button" style="cursor: pointer">Cancel</a>
+                <a id="closeOutgoingMessage" name="closeOutgoingMessage" data-icon="back" class="ui-btn-right" data-role="button" style="cursor: pointer">Close</a>
+            </div>
+        </form>
+    </div>
+
+    <div data-role="page" id="DeclineMessage">
+        <form>
+            <div id="DeclineMessageIOS"><br /><br /></div>
+            <div data-role="header">
+                <h1>Atlas Mobile</h1>
+                <h1>Decline Request Messages</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <table>
+                    <tr>
+                        <td style="vertical-align: top">
+                            <label for="szDeclineMessageText">Message:</label>
+                        </td>
+                        <td>
+                            <textarea name="Message" id="szDeclineMessageText"></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div data-role="footer">
+                <a id="saveDeclineMessage" name="saveDeclineMessage" data-icon="check" class="ui-btn-left" data-role="button" style="cursor: pointer">Save</a>
+                <a id="cancelDeclineMessage" name="cancelDeclineMessage" data-icon="delete" class="ui-btn-right" data-role="button" style="cursor: pointer">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+    <div data-role="page" id="ApproveMessage">
+        <form>
+            <div id="ApproveMessageIOS"><br /><br /></div>
+            <div data-role="header">
+                <h1>Atlas Mobile</h1>
+                <h1>Approve Request Messages</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <table>
+                    <tr>
+                        <td style="vertical-align: top">
+                            <label for="szApproveMessageText">
+                                <br />
+                                Message:
+                            </label>
+                        </td>
+                        <td>
+                            <textarea name="Message" id="szApproveMessageText"></textarea>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr id="ApprovCheckBoxesRow">
+                        <td>
+                            <input type="checkbox" name=">Weekdays Only" id="bWeekDayOnly" data-mini="true" />
+                            <label for="bWeekDayOnly">Weekdays Only</label>
+                            <input type="checkbox" name="No Holidays" id="bNoHoliday" data-mini="true" />
+                            <label for="bNoHoliday">No Holidays</label>
+                        </td>
+                    </tr>
+                </table>
+
+                <table>
+                    <tr id="szApproveMessageOTARow">
+                        <td style="vertical-align: middle">
+                            <label for="szApproveMessageOTASelect">Other Activity:</label>
+                        </td>
+                        <td>
+                            <select name="szApproveMessageOTASelect" id="szApproveMessageOTASelect" data-native-menu="false" class="filterable-select">
+                                <option value="" data-placeholder="true">Select Other Activity</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div data-role="footer">
+                <a id="saveApproveMessage" name="saveApproveMessage" data-icon="check" class="ui-btn-left" data-role="button" style="cursor: pointer">Save</a>
+                <a id="cancelApproveMessage" name="cancelApproveMessage" data-icon="delete" class="ui-btn-right" data-role="button" style="cursor: pointer">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+    <div data-role="page" id="ReplyMessage">
+        <form>
+            <div id="ReplyMessageIOS"><br /><br /></div>
+            <div data-role="header">
+                <h1>Atlas Mobile</h1>
+                <h1>Reply Messages</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <table>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="szReplyMessageType">Message Type:</label>
+                        </td>
+                        <td>
+                            <input type="text" name="Message Type" id="szReplyMessageType" value="" readonly style="background-color: silver;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="szReplyMessageToEmployeeName">To:</label>
+                        </td>
+                        <td>
+                            <input type="text" name="Sent To" id="szReplyMessageToEmployeeName" value="Supervisor" readonly style="background-color: silver;">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="szReplyMessageDescription">Message Description:</label>
+                        </td>
+                        <td>
+                            <input type="text" name="Message Description" id="szReplyMessageDescription" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top">
+                            <label for="szReplyMessageText">Message:</label>
+                        </td>
+                        <td>
+                            <textarea name="Message" id="szReplyMessageText"></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div data-role="footer">
+                <a id="saveReplyMessage" name="saveReplyMessage" data-icon="check" class="ui-btn-left" data-role="button" style="cursor: pointer">Save</a>
+                <a id="cancelReplyMessage" name="cancelReplyMessage" data-icon="delete" class="ui-btn-right" data-role="button" style="cursor: pointer">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+    <div data-role="page" id="ScheduleCoverRequest" data-dom-cache="true">
+        <form>
+            <div id="ScheduleCoverRequestIOS"><br /><br /></div>
+            <div data-role="header">
+                <h1>Atlas Mobile</h1>
+                <h1 id="szScheduleCoverHeader">Employee Schedule Cover Request</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <table>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="szCoverDescription">Description:</label>
+                        </td>
+                        <td>
+                            <input type="text" name="Message Description" id="szCoverDescription" value="">
+                        </td>
+                    </tr>
+                    <tr id="DateFrom">
+                        <td style="vertical-align: middle">
+                            <label for="lCoverDateRequested">Date Requested:</label>
+                        </td>
+                        <td>
+                            <input type="date" name="Date Requested" id="lCoverDateRequested" value="" readonly style="background-color: silver;">
+                        </td>
+                    </tr>
+                    <tr id="TimeFrom">
+                        <td style="vertical-align: middle">
+                            <label for="lCoverTimeRequestFrom">From Time:</label>
+                        </td>
+                        <td>
+                            <input type="time" name="Time Requested From" id="lCoverTimeRequestFrom" value="12:30 AM">
+                        </td>
+                    </tr>
+                    <tr id="TimeTo">
+                        <td style="vertical-align: middle">
+                            <label for="lCoverTimeRequestTo">To Time:</label>
+                        </td>
+                        <td>
+                            <input type="time" name="Time Requested To" id="lCoverTimeRequestTo" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: top">
+                            <label for="szCoverText">
+                                <br />
+                                Message:
+                            </label>
+                        </td>
+                        <td>
+                            <textarea name="Message" id="szCoverText"></textarea>
+                        </td>
+                    </tr>
+                </table>
+                <div style="display: none;">
+                    <input type="text" id="lOrigCoverTimeRequestFrom" style="display: none">
+                    <input type="text" id="lOrigCoverTimeRequestTo" style="display: none">
+                    <input type="text" id="szCoverDepartment" style="display: none">
+                    <input type="text" id="szCoverJobDescription" style="display: none">
+                    <input type="text" id="szCoverTaskDescription" style="display: none">
+                </div>
+
+            </div>
+            <div data-role="footer">
+                <a id="saveScheduleCover" name="saveScheduleCover" data-icon="check" class="ui-btn-left" data-role="button" style="cursor: pointer">Save</a>
+                <a id="cancelScheduleCover" name="cancelScheduleCover" data-icon="delete" class="ui-btn-right" data-role="button" style="cursor: pointer">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+
+    <div data-role="page" id="Login">
+        <form>
+            <div id="LoginIOS"><br /><br /></div>
+            <div data-role="header">
+                <h1>Atlas Mobile</h1>
+                <h1>Login</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <table>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="szLoginClockId">Clock Id:</label>
+                        </td>
+                        <td>
+                            <input type="tel" name="szLoginClockId" id="szLoginClockId" value="">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="vertical-align: middle">
+                            <label for="szLoginClockPassword">Clock Password:</label>
+                        </td>
+                        <td>
+                            <input type="tel" name="szLoginClockPassword" id="szLoginClockPassword" value="" style="-webkit-text-security:disc">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div data-role="footer">
+                <a id="punchLogin" name="punchLogin" data-icon="check" class="ui-btn-left" data-role="button" style="cursor: pointer">Punch</a>
+                <a id="saveLogin" name="saveLogin" data-icon="check" class="ui-btn-right" data-role="button" style="cursor: pointer">Info</a>
+            </div>
+        </form>
+    </div>
+
+    <div data-role="page" id="About">
+        <div id="AboutIOS"><br /><br /></div>
+        <div data-role="header">
+            <h1>Atlas Mobile</h1>
+            <h1>About</h1>
+            <a href="#Home" data-icon="home" class="ui-btn-right" data-transition="slide">Home</a>
+        </div>
+        <div data-role="main" class="ui-content">
+            <img alt="" src="images/InfiniTime_Atlas_Mobile.png" />
+            <p>Inception Technologies<br />6097 North 57th Drive<br />Glendale, AZ 85301<br />(800)473-9457 Ext. 203</p>
+            <p id="aboutVersion">Version Number:</p>
+            <a href="http://www.inceptiontechnologies.com/" rel="external">www.InceptionTechnologies.com</a><br /><br />
+            <a href="mailto:Sales@InceptionTechnologies.com" rel="external">Sales@InceptionTechnologies.com</a>
+            <p id="GeoLocationStatusInfo">Geo Status</p>
+            <p id="PluginLatitudeLongitude">Pligin Latitude:</p>
+            <p id="PhonGapLatitudeLongitude">PhonGap Latitude:</p>
+            <p id="GeoPunchStatus">Geo Punch</p>
+
+        </div>
+    </div>
+
+    <div data-role="page" data-dialog="true" id="dialogPage">
+        <div data-role="header">
+            <h2 id="dialogHeader">Are you sure?</h2>
+        </div>
+        <div class="ui-content" role="main">
+            <p id="dialogMessage">You have unsaved changes. If you exit without saving them, you will lose them.</p>
+            <div class="ui-grid-a" style="display: none" id="YesNoblock">
+                <div class="ui-block-a">
+                    <a href="#" id="dialogPageNoBbutton" class="ui-btn ui-btn-c ui-shadow ui-corner-all">No</a>
+                </div>
+                <div class="ui-block-b">
+                    <a href="#" id="dialogPageYesbutton" class="ui-btn ui-btn-c ui-shadow ui-corner-all">Yes</a>
+                </div>
+            </div>
+            <div class="ui-grid-a" style="display: none" id="Closeblock">
+                <div class="ui-block-a">
+                    <a href="#" id="dialogPageClosebutton" class="ui-btn ui-btn-c ui-shadow ui-corner-all">Close</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="wait">
+        <button class="show-page-loading-msg" id="showWaiting" style="display:none"></button>
+        <button class="hide-page-loading-msg" id="hideWaiting" style="display:none"></button>
+    </div>
+</body>
+</html>
