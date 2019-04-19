@@ -109,17 +109,21 @@ function buildZSHTable(tx, results) {
     }
     tableHTML = '<table data-role="table" class="ui-responsive ui-shadow ui-table " id="zshTablel">'
     tableHTML += '<thead><tr nowrap>'
-    tableHTML += '<th nowrap class="myth" data-colstart="1">Type</th>'
-    tableHTML += '<th nowrap class="myth" data-colstart="2">Date</th><th nowrap class="myth" data-colstart="3">Begin Time</th>'
-    tableHTML += '<th nowrap class="myth" data-colstart="4">End Time</th><th nowrap class="myth" data-colstart="5">Department</th>'
+    tableHTML += '<th nowrap class="myth" data-colstart="1">Day of Week</th>'
+    tableHTML += '<th nowrap class="myth" data-colstart="2">Type</th>'
+    tableHTML += '<th nowrap class="myth" data-colstart="3">Date</th>'
+    tableHTML += '<th nowrap class="myth" data-colstart="4">Begin Time</th>'
+    tableHTML += '<th nowrap class="myth" data-colstart="5">End Time</th>'
+    tableHTML += '<th nowrap class="myth" data-colstart="6">Department</th>'
     if (ljobCount > 0) {
-        tableHTML += '<th nowrap class="myth" data-colstart="6">Job</th>'
+        tableHTML += '<th nowrap class="myth" data-colstart="7">Job</th>'
     }
     if (ltaskCount > 0) {
-        tableHTML += '<th nowrap class="myth" data-colstart="7">Task</th>'
+        tableHTML += '<th nowrap class="myth" data-colstart="8">Task</th>'
     }
     tableHTML += '</tr></thead><tbody>'
     if (results.rows.length <= 0) {
+        tableHTML += '<td nowrap class="mytd"><b class="ui-table-cell-label"></b> </td>'
         tableHTML += '<td nowrap class="mytd"><b class="ui-table-cell-label"></b> </td>'
         tableHTML += '<td nowrap class="mytd"><b class="ui-table-cell-label"></b> </td>'
         tableHTML += '<td nowrap class="mytd"><b class="ui-table-cell-label"></b> </td>'
@@ -142,6 +146,11 @@ function buildZSHTable(tx, results) {
                 row = rows[i]
             }
             tableHTML += '<tr nowrap class="mytr" id="' + row.lZSH_SysId + '">'
+
+            var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            var dayName = days[(new Date(toSqlDate(row.lDate))).getDay()];
+
+            tableHTML += '<td nowrap class="mytd"><b class="ui-table-cell-label"></b>' + dayName + '</td>'
             if (row.szType == "Working" || row.szType == "Paid Break" || row.szType == "Unpaid Break") {
                 tableHTML += '<td nowrap class="mytd"><b class="ui-table-cell-label"></b>' + row.szType + '</td>'
             }
